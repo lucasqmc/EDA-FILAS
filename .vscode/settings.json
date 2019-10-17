@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "vetor_tamanho_fixo.h": "c"
+    }
+}
