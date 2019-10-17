@@ -15,7 +15,10 @@ void iniciaFila(){
 }
 
 int tiradafila(void) {
-   return teste.vetor[teste.p++];
+    int retirado = teste.vetor[teste.p];
+    teste.p++;
+    
+   return retirado;
 }
 
 void colocanafila(int y) {
@@ -34,14 +37,28 @@ void exibeFila(){
     printf("\n");
 }
 
+int tamanhoFila(){
+    int count = 0;
+    for ( int i = teste.p; i < teste.u; i++){
+        count ++;
+    }
+
+    return count;
+}
+
 int main(){
     iniciaFila();
     colocanafila(2);
     colocanafila(3);
     colocanafila(4);
     exibeFila();
+    printf("Tamanho da fila: %d\n",tamanhoFila());
     tiradafila();
     exibeFila();
+    printf("Tamanho da fila: %d\n",tamanhoFila());
+    colocanafila(5);
+    exibeFila();
+    printf("Tamanho da fila: %d\n",tamanhoFila());
 
     return 0;
 }

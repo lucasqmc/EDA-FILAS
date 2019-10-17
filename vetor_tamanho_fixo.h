@@ -16,3 +16,4 @@ void iniciaFila();
 int tiradafila(void);
 void colocanafila(int y);
 void exibeFila(void);
+int tamanhoFila(void);
