@@ -2,10 +2,10 @@
 
 fila teste;
 
-int filavazia (void) {
+int filavazia(void) {
    return teste.p >= teste.u;
 }
-int filacheia (void) {
+int filacheia(void) {
    return teste.u == MAX - 1;
 }
 
@@ -14,19 +14,35 @@ void iniciaFila(){
     teste.u = 0;
 }
 
-int tiradafila (void) {
+int tiradafila(void) {
    return teste.vetor[teste.p++];
 }
 
-void colocanafila (int y) {
-   teste.vetor[teste.u++] = y;
+void colocanafila(int y) {
+   if (!filacheia()){
+     teste.vetor[teste.u++] = y;  
+   }
+   else{
+       exit(1);
+   }
+}
+
+void exibeFila(){
+    for ( int i = teste.p; i < teste.u; i++){
+        printf("%d ",teste.vetor[i]);
+    }
+    printf("\n");
 }
 
 int main(){
+    iniciaFila();
+    colocanafila(2);
+    colocanafila(3);
+    colocanafila(4);
+    exibeFila();
+    tiradafila();
+    exibeFila();
 
-    teste.p = 3;
-
-    printf("%d\n",teste.p);
     return 0;
 }
 

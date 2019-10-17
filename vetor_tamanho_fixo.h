@@ -9,3 +9,10 @@ struct Fila
     int vetor[MAX];
 };
 typedef struct Fila fila;
+
+int filavazia(void);
+int filacheia(void);
+void iniciaFila();
+int tiradafila(void);
+void colocanafila(int y);
+void exibeFila(void);
