@@ -1,3 +1,16 @@
+// #ifndef _fila_fixo_h
+// #define _fila_fixo_h
+
+//     int filaVazia(void);
+//     int filaCheia(void);
+//     void reiniciaFila();
+//     void removeItemFila(void);
+//     void insereItemFila(int y);
+//     void exibeFila(void);
+//     int tamanhoFila(void);
+
+// #endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #define MAX 10
@@ -15,7 +28,7 @@ fila teste;
 
 int filaVazia(void);
 int filaCheia(void);
-void iniciaFila();
+void reiniciaFila();
 void removeItemFila(void);
 void insereItemFila(int y);
 void exibeFila(void);
@@ -42,9 +55,14 @@ int filaCheia(void) {
     return bool; 
 }
 
-void iniciaFila(){
+void reiniciaFila(){
     teste.p = 0;
     teste.u = 0;
+    for( int i = 0; i < MAX; i++){
+        teste.vetor[i] = -1;
+    }
+
+    teste.vetor[0] = -1;
 }
 
 void removeItemFila(void) {
@@ -52,12 +70,12 @@ void removeItemFila(void) {
     // teste.p++;
     if (!filaVazia()){
      if(teste.p == MAX - 1){
-        teste.vetor[teste.p] = 0; 
+        teste.vetor[teste.p] = -1; 
         teste.p = 0;
         
      }
      else{
-        teste.vetor[teste.p] = 0;
+        teste.vetor[teste.p] = -1;
         teste.p++; 
      }      
    }
@@ -68,17 +86,16 @@ void removeItemFila(void) {
 
 void insereItemFila(int y) {
    if (!filaCheia()){
-     if(teste.u == MAX - 1){
-        teste.u = 0;
-        teste.vetor[teste.u] = y; 
+     if(teste.u == MAX){
+        //printf("\nFila Cheia! Não foi possível inserir item na fila\n");
      }
      else{
-        teste.u++;
         teste.vetor[teste.u] = y; 
+        teste.u++;
      }      
    }
    else{
-       printf("Fila Cheia! Não foi possível inserir item na fila\n");
+       //printf("\nFila Cheia! Não foi possível inserir item na fila\n");
    }
 }
 
@@ -100,17 +117,14 @@ void exibeFila(){
 
     for ( int i = 0; i < MAX; i++){
         if(teste.p <= teste.u){
-            if((i >= teste.p && i <= teste.u)){
-                printf(" %03d |",teste.vetor[i]);
+            if((i >= teste.p && i <= teste.u) && teste.p != teste.u){
+                if(i != teste.u){
+                    printf(" %03d |",teste.vetor[i]);
+                }else{
+                 printf(" XXX |");
+                }                
             }else{
                  printf(" XXX |");
-             }
-        }
-        else if(teste.p > teste.u){
-            if((i >= 0 && i <= teste.u) || (i >= teste.p && i <= MAX)){
-                printf(" %03d |",teste.vetor[i]);
-            }else{
-                printf(" XXX |");
              }
         }else{
             printf(" XXX |");
@@ -151,19 +165,9 @@ void exibeFila(){
 
 int tamanhoFila(){
     int count = 0;
-    if(teste.p < teste.u){
 
-        for ( int i = teste.p; i <= teste.u; i++){
-            count ++;
-        }
-    }
-    else if(teste.p > teste.u){
-        for ( int i = teste.p; i <= MAX; i++){
-            count ++;
-        }
-        for ( int i = 0; i <= teste.u; i++){
-            count ++;
-        }
+    for ( int i = teste.p; i < teste.u; i++){
+        count ++;
     }
 
     return count;
