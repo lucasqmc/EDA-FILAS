@@ -13,7 +13,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#define MAX 10
+#define MAX 3
 
 struct Fila
 {
@@ -41,17 +41,10 @@ int filaVazia(void) {
 int filaCheia(void) {
     int bool = 0;   
 
-    if(teste.p < teste.u){
-        if(teste.u == MAX - 1 && teste.p == 0){
-            bool = 1;
-        }
+    if(teste.u == MAX){
+        bool = 1;
     }
-    else if(teste.u < teste.p){
-        if(teste. p - teste.u == 1){
-            bool = 1;
-        }
-    }
-
+     
     return bool; 
 }
 
@@ -69,15 +62,12 @@ void removeItemFila(void) {
     // int retirado = teste.vetor[teste.p];
     // teste.p++;
     if (!filaVazia()){
-     if(teste.p == MAX - 1){
-        teste.vetor[teste.p] = -1; 
-        teste.p = 0;
-        
-     }
-     else{
-        teste.vetor[teste.p] = -1;
-        teste.p++; 
-     }      
+        if(teste.p < MAX){
+            teste.vetor[teste.p] = -1;
+            teste.p++; 
+        }else{
+            printf("Fila Vazia! Não foi possível remover mais itens da fila\n");
+        }
    }
    else{
        printf("Fila Vazia! Não foi possível remover mais itens da fila\n");
@@ -86,13 +76,8 @@ void removeItemFila(void) {
 
 void insereItemFila(int y) {
    if (!filaCheia()){
-     if(teste.u == MAX){
-        //printf("\nFila Cheia! Não foi possível inserir item na fila\n");
-     }
-     else{
         teste.vetor[teste.u] = y; 
-        teste.u++;
-     }      
+        teste.u++;      
    }
    else{
        //printf("\nFila Cheia! Não foi possível inserir item na fila\n");
@@ -117,7 +102,7 @@ void exibeFila(){
 
     for ( int i = 0; i < MAX; i++){
         if(teste.p <= teste.u){
-            if((i >= teste.p && i <= teste.u) && teste.p != teste.u){
+            if((i >= teste.p && i <= teste.u)){
                 if(i != teste.u){
                     printf(" %03d |",teste.vetor[i]);
                 }else{
