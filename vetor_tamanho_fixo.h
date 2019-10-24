@@ -8,7 +8,7 @@
 
 int filaVazia(void);
 int filaCheia(void);
-void reiniciaFila();
+void iniciaFila(void);
 void removeItemFila(void);
 void insereItemFila(int y);
 void exibeFila(void);
