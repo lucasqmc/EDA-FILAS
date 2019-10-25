@@ -126,10 +126,14 @@ void exibeFila(){
     printf("\n");
 }
 
-int main(){
+int tamanhoFila(){
+    int count = 0;
 
-    return 0;    
+    for ( int i = teste.p; i < teste.u; i++){
+        count ++;
+    }
+    
+    return count;
 }
-
 
 
