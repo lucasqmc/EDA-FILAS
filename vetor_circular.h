@@ -3,10 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#define MAX 10
-#define FIXO 0
-#define CIRCULAR 1
-#define LISTA 0
+#include "vetor_circular.c"
 
 
 int filaVazia(void);
