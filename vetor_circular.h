@@ -11,6 +11,8 @@ int filaCheia(void);
 void iniciaFila(void);
 void removeItemFila(void);
 void insereItemFila(int y);
+void prepareRemove();
+void prepareInserir();
 void exibeFila(void);
 int tamanhoFila(void);
 
