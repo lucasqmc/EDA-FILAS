@@ -1,5 +1,5 @@
 #include "vetor_tamanho_fixo.h"
-#define MAX 3
+#define MAX 5
 
 struct Fila
 {
@@ -209,4 +209,8 @@ void prepareInserir(){
         printf("\n%d elemento(s) foi(ram) inserido(s) na fila, mas %d não coube(ram).", vagas_livre,nao_inseridos); 
     }   
     valor = 0;   
+}
+
+void freeFila(){
+
 }

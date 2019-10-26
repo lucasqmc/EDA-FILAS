@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdlib.h": "c",
-        "vetor_tamanho_fixo.h": "c"
+        "vetor_tamanho_fixo.h": "c",
+        "vetor_circular.h": "c"
     }
 }

@@ -8,5 +8,7 @@
     int enfileira(int y);
     int desenfileira(int *y);
     int destroi_fila();
+    void prepareRemove();
+    void prepareInserir();
 
 #endif

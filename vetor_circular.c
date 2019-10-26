@@ -1,16 +1,16 @@
 #include "vetor_circular.h"
-#define MAX 3 
+#define MAX 5
 
 struct Fila
 {
     int p;
     int u;
-    int vetor[MAX];
+    int *vetor;
+    int tamanhoVetor;
 };
 typedef struct Fila Fila;
 
-Fila *fila;
-
+Fila fila;
 
 int filaVazia(void) {
    return tamanhoFila() == 0;
@@ -19,7 +19,10 @@ int filaVazia(void) {
 int filaCheia(void) {
     int bool = 0;   
 
-    if(fila->u == MAX){
+    if(fila.p == 0 && fila.u == fila.tamanhoVetor - 1){
+        bool = 1;
+    }
+    else if(fila.p > fila.u && fila.p - fila.u == 1){
         bool = 1;
     }
      
@@ -27,18 +30,33 @@ int filaCheia(void) {
 }
 
 void iniciaFila (void) {
-   fila->p = fila->u = 0;
+   fila.p = fila.u = 0;
+   fila.tamanhoVetor = MAX;
+   free(fila.vetor);
+   fila.vetor = (int *) malloc(sizeof(int)*MAX);
+
+   for(int i = 0; i < fila.tamanhoVetor; i++){
+       fila.vetor[i] = -1;
+   }
 }
 
 void removeItemFila(void) {
-    // int retirado = fila->vetor[fila->p];
-    // fila->p++;
+    // int retirado = fila.vetor[fila.p];
+    // fila.p++;
     if (!filaVazia()){
-        if(fila->p < MAX){
-            fila->vetor[fila->p] = -1;
-            fila->p++; 
+        if(fila.p == fila.u){
+            if(fila.vetor[fila.p] != -1){
+                fila.vetor[fila.p] = -1;
+            }else{
+                printf("Fila Vazia! Não foi possível remover mais itens da fila\n");
+            }
+        }
+        else if(fila.p > fila.u && fila.p == fila.tamanhoVetor -1){
+           fila.vetor[fila.p] = -1; 
+           fila.p = 0;  
         }else{
-            printf("Fila Vazia! Não foi possível remover mais itens da fila\n");
+            fila.vetor[fila.p] = -1; 
+            fila.p++;  
         }
    }
    else{
@@ -48,29 +66,48 @@ void removeItemFila(void) {
 
 void insereItemFila(int y) {
    if (!filaCheia()){
-        fila->vetor[fila->u] = y; 
-        fila->u++;      
+       if(fila.u == fila.tamanhoVetor - 1){
+           if(fila.vetor[fila.u] != -1){
+               if(fila.p == 1){
+                   fila.u = 0;
+                   fila.vetor[fila.u] = y; 
+               }else if(fila.p > 1){
+                   fila.u = 1;
+                   fila.vetor[fila.u - 1] = y; 
+               }
+            }else{
+                fila.vetor[fila.u] = y; 
+                fila.u = 0;  
+            }            
+       }else if(fila.vetor[fila.u] != -1){
+           if(fila.p - fila.u == 1){
+                fila.u++;
+                fila.vetor[fila.u] = y; 
+            }else if(fila.p - fila.u > 1){
+                fila.u = fila.u + 2;
+                fila.vetor[fila.u - 1] = y; 
+            }
+
+       }else{
+           fila.vetor[fila.u] = y; 
+           fila.u++;  
+       }
    }
    else{
-       //printf("\nFila Cheia! Não foi possível inserir item na fila\n");
+        if(fila.vetor[fila.u] == -1){
+            fila.vetor[fila.u] = y; 
+        }
+        //printf("\nFila Cheia! Não foi possível inserir item na fila\n");
    }
 }
 
+
 int tamanhoFila(){
     int count = 0;
-    if(fila->p < fila->u){
-
-        for ( int i = fila->p; i < fila->u; i++){
-            count ++;
-        }
-    }
-    else if(fila->p > fila->u){
-        for ( int i = fila->p; i < MAX; i++){
-            count ++;
-        }
-        for ( int i = 0; i < fila->u; i++){
-            count ++;
-        }
+    for ( int i = 0; i < fila.tamanhoVetor; i++){
+        if(fila.vetor[i] != -1){
+          count ++;  
+        }        
     }
 
     return count;
@@ -82,8 +119,8 @@ void exibeFila(){
     
     printf(" ");
 
-    for ( int i = 0; i < MAX; i++){
-        if(i == (MAX - 1)){
+    for ( int i = 0; i < fila.tamanhoVetor; i++){
+        if(i == (fila.tamanhoVetor - 1)){
             printf("----- \n");
         }else{
             printf("------");
@@ -92,27 +129,37 @@ void exibeFila(){
 
     printf("|");
 
-    for ( int i = 0; i < MAX; i++){
-        if(fila->p <= fila->u){
-            if((i >= fila->p && i <= fila->u)){
-                if(i != fila->u){
-                    printf(" %03d |",fila->vetor[i]);
-                }else{
-                 printf(" XXX |");
-                }                
-            }else{
-                 printf(" XXX |");
-             }
+    for ( int i = 0; i < fila.tamanhoVetor; i++){
+        // if(fila.p <= fila.u){
+        //     if((i >= fila.p && i <= fila.u)){
+        //         if(i != fila.u){
+        //             printf(" %03d |",fila.vetor[i]);
+        //         }else{
+        //          printf(" XXX |");
+        //         }                
+        //     }else{
+        //          printf(" XXX |");   
+        //      }
+        // }else{
+        //     if(i == fila.u){
+        //         printf(" %03d |",fila.vetor[i]);
+        //     }else{
+        //         printf(" XXX |");
+        //     }        
+        // }
+        if(fila.vetor[i] != -1){
+            printf(" %03d |", fila.vetor[i]);
         }else{
             printf(" XXX |");
-        }
+        }     
+                
         
     }
     printf("\n");
     printf(" ");
 
-    for ( int i = 0; i < MAX; i++){
-        if(i == (MAX - 1)){
+    for ( int i = 0; i < fila.tamanhoVetor; i++){
+        if(i == (fila.tamanhoVetor - 1)){
             printf("-----");
         }else{
             printf("------");
@@ -122,12 +169,12 @@ void exibeFila(){
     printf("\n");
     printf(">");
 
-    for ( int i = 0; i < MAX; i++){
-        if(i == fila->p || i == fila->u){
-            if(i == fila->p && i != fila->u){
+    for ( int i = 0; i < fila.tamanhoVetor; i++){
+        if(i == fila.p || i == fila.u){
+            if(i == fila.p && i != fila.u){
                 printf("  p   ");
             }
-            else if(fila->p == fila->u){
+            else if(fila.p == fila.u){
                 printf(" p-u  ");
             }
             else{
@@ -138,30 +185,50 @@ void exibeFila(){
         }
     }
     printf("\n");
+
 }
 
 void prepareRemove(){
     int activity_bool = 1,option = -1, j = 0;
     int valor = 0,vagas_livre = 0,nao_inseridos = 0, valorInsere_tmp = -1;
     int tamanhoFila_tmp = 0, nao_removidos = 0, qnt_remover = 0; 
-
+    int localizar_p = fila.p, contador = 0;
     
     printf("\nInsira a quantidade de elementos que deseja remover: ");
     scanf("%d", &valor);
     tamanhoFila_tmp = tamanhoFila();
+    localizar_p = (fila.tamanhoVetor - 1) - (fila.p  + valor);
+
     if(valor > tamanhoFila_tmp){
         nao_removidos = valor - tamanhoFila_tmp;
-        qnt_remover = fila->u;
+        if( localizar_p < 0 ){
+            qnt_remover = fila.tamanhoVetor;
+        }else{
+           qnt_remover = valor + fila.p; 
+        }
     }
     else{
-        qnt_remover = valor + fila->p;
+        if( localizar_p < 0 ){
+            qnt_remover = fila.tamanhoVetor;
+        }else{
+           qnt_remover = valor + fila.p; 
+        }
     }
 
     
     printf(" ----------------------- \n");
-    for(int i = fila->p;i < qnt_remover;i++){
-        printf("| Elemento removido: %03d |\n", fila->vetor[i]);
+    for(int i = fila.p;i < qnt_remover;i++){
+        printf("| Elemento removido: %03d |\n", fila.vetor[i]);
         removeItemFila();
+        contador++;
+    }
+
+    if( localizar_p < 0 && fila.p != fila.u ){
+        qnt_remover = valor - contador;
+        for(int i = fila.p;i < qnt_remover;i++){
+            printf("| Elemento removido: %03d |\n", fila.vetor[i]);
+            removeItemFila();
+        }
     }
     if(valor > tamanhoFila_tmp){
         printf("\n > A lista está vazia! %d foi(ram) removido(s) da lista\n", tamanhoFila_tmp);
@@ -177,10 +244,10 @@ void prepareInserir(){
     
     printf("\nInsira a quantidade de elementos que deseja inserir: ");
     scanf("%d", &valor);
-    if(fila->u == MAX){
+    if(fila.u == fila.tamanhoVetor){
         vagas_livre = 0;    
     }else{
-        vagas_livre = MAX - tamanhoFila();
+        vagas_livre = fila.tamanhoVetor - tamanhoFila();
     }
     if(valor > vagas_livre){
         nao_inseridos = valor - vagas_livre;
@@ -208,8 +275,12 @@ void prepareInserir(){
     if(valor > vagas_livre){                  
         printf("\n%d elemento(s) foi(ram) inserido(s) na fila, mas %d não coube(ram).", vagas_livre,nao_inseridos);  
     } 
-    else if(fila->u == MAX){
+    else if(fila.u == fila.tamanhoVetor){
         printf("\n%d elemento(s) foi(ram) inserido(s) na fila, mas %d não coube(ram).", vagas_livre,nao_inseridos); 
     }   
     valor = 0;   
+}
+
+void freeFila(){
+    free(fila.vetor);
 }

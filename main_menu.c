@@ -1,4 +1,4 @@
-#include "vetor_tamanho_fixo.h"
+#include "vetor_circular.h"
 
 
 
@@ -6,6 +6,7 @@
 int main(){
 
     int activity_bool = 1,option = -1, j = 0;
+    iniciaFila();
 
     while(activity_bool){
         printf("\n -------------------------------------------");
@@ -47,6 +48,7 @@ int main(){
             break;
 
             case 5:
+                freeFila();
                 activity_bool = 0;
             break;
 
