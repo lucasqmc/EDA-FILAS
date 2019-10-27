@@ -5,15 +5,15 @@
 #include <stdio.h>
 #include "vetor_circular.c"
 
-
+int tamanhoFila(void);
 int filaVazia(void);
 int filaCheia(void);
 void iniciaFila(void);
 void removeItemFila(void);
-void insereItemFila(int y);
+void insereItemFila(int);
 void exibeFila(void);
-int tamanhoFila(void);
 void prepareRemove();
 void prepareInserir();
 void freeFila();
+int rearranjarFila(int, int);
 #endif
