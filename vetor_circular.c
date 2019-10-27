@@ -243,9 +243,6 @@ int rearranjarFila(int aumento, int vagas_disponiveis){
                 fila.vetor[i] = -1;
             }
 
-            printf("\n> Fila antes de inserir:\n");
-            exibeFila();
-
             free(vetor_temp);
 
         }else{
